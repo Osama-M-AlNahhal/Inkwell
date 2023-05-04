@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block custom_styles %}
+  <style>
+      #div_id_username label, #div_id_email label, #div_id_password1 label, #div_id_password2 {
+        display: none;
+      }
+
+      .form-group {
+        position: relative;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .form-group input {
+        font-family: Poppins-Medium;
+        font-size: 15px;
+        line-height: 1.5;
+        color: #666666;
+
+        display: block;
+        width: 100%;
+        background: #e6e6e6;
+        height: 50px;
+        border-radius: 25px;
+        padding: 0 30px 0 68px;
+        border: none;
+      }
+
+      .form-group input:focus {
+        outline: none;
+      }
+
+      .form-group label {
+        position: absolute;
+        top: -20px;
+        left: 0;
+        font-size: 15px;
+        font-weight: bold;
+        color: #999999;
+      }
+
+      .form-group input:focus + label {
+        color: #8B54C7;
+      }
+
+      .form-group .symbol-input100 {
+        font-size: 15px;
+
+        display: flex;
+        align-items: center;
+        position: absolute;
+        border-radius: 25px;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding-left: 35px;
+        pointer-events: none;
+        color: #666666;
+
+        transition: all 0.4s;
+      }
+
+      .form-group input:focus + .symbol-input100 {
+        color: #8B54C7;
+        padding-left: 28px;
+      }
+
+      .form-group .asteriskField {
+        color: red;
+      }
+
+  </style>
+{% endblock %}
+
+{% block body %}
+  <div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100" style="padding-top:153px">
+          {% block navbar %}
+          {% endblock %}
+          {% block content %}
+            <div class="login100-pic js-tilt" data-tilt>
+                <img src="{% static 'images/img-01.png' %}" alt="IMG">
+            </div>
+
+            <form class="login100-form validate-form" autocomplete="off" method="post" action="{% url 'signup' %}">
+                <span class="login100-form-title">
+                    Register
+                </span>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn" type="submit">
+                        Register
+                    </button>
+                </div>
+
+                <div class="text-center p-t-136">
+                    <a class="txt2" href="{% url 'login' %}">
+                        Log in
+                        <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </form>
+          {% endblock %}
+        </div>
+    </div>
+  </div>
+
+  <script>
+function createInputHTML(type, name, placeholder, value, dataValidate) {
+  const div = document.createElement("div");
+  div.classList.add("wrap-input100", "validate-input");
+  div.setAttribute("data-validate", dataValidate);
+
+  const input = document.createElement("input");
+  input.classList.add("input100");
+  input.setAttribute("type", type);
+  input.setAttribute("name", name);
+  input.setAttribute("placeholder", placeholder);
+
+  const span1 = document.createElement("span");
+  span1.classList.add("focus-input100");
+
+  const span2 = document.createElement("span");
+  span2.classList.add("symbol-input100");
+
+  const i = document.createElement("i");
+  i.classList.add("fa");
+
+  if (type === "text") {
+    i.classList.add("fa-user");
+  } else if (type === "email") {
+    i.classList.add("fa-envelope");
+  } else if (type === "password") {
+    i.classList.add("fa-lock");
+  }
+
+  i.setAttribute("aria-hidden", "true");
+
+  div.appendChild(input);
+  div.appendChild(span1);
+  span2.appendChild(i);
+  div.appendChild(span2);
+
+  return div;
+}
+
+const divUsername = document.getElementById("div_id_username");
+const divEmail = document.getElementById("div_id_email");
+const divPassword = document.getElementById("div_id_password1");
+const divPassword2 = document.getElementById("div_id_password2");
+
+
+const modifiedHTMLUsername = createInputHTML("text", "username", "Username", "Username", "username is required");
+const modifiedHTMLEmail = createInputHTML("email", "email", "Email", "ex@abc.xyz", "email is required");
+const modifiedHTMLPassword = createInputHTML("password", "pass", "Password", "Password", "password is required");
+divPassword2.remove()
+
+divUsername.replaceWith(modifiedHTMLUsername);
+divEmail.replaceWith(modifiedHTMLEmail);
+divPassword.replaceWith(modifiedHTMLPassword);
+
+  </script>
+{% endblock %}
+
+
+
