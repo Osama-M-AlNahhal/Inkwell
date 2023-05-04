@@ -3,8 +3,6 @@
 Inkwell is a social media web application built with Django, allowing users to create and share posts, like and comment on them, and follow other users. The application features a sleek and responsive user interface, along with robust backend functionality for seamless user experience.
 
 
-----
-
 
 ## Features
 
